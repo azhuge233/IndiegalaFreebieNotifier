@@ -13,6 +13,8 @@ Fetch data from [https://freebies.indiegala.com/](https://freebies.indiegala.com
     - [https://github.com/azhuge233/EpicBundle-FreeGames-dotnet](https://github.com/azhuge233/EpicBundle-FreeGames-dotnet)
 - Indiegala
     - [https://github.com/azhuge233/IndiegalaFreebieNotifier](https://github.com/azhuge233/IndiegalaFreebieNotifier)
+- GOG
+    - [https://github.com/azhuge233/GOGGiveawayNotifier](https://github.com/azhuge233/GOGGiveawayNotifier)
 
 ## Build
 
