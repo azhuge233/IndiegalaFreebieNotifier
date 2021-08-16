@@ -4,31 +4,31 @@ using System.Collections.Generic;
 using Telegram.Bot;
 using Telegram.Bot.Types.Enums;
 using Microsoft.Extensions.Logging;
+using IndiegalaFreebieNotifier.Model;
 
-namespace IndiegalaFreebieNotifier {
-	class TgBot : IDisposable {
+namespace IndiegalaFreebieNotifier.Notifier {
+	class TgBot : INotifiable {
 		private readonly ILogger<TgBot> _logger;
-		private TelegramBotClient BotClient { get; set; }
 
 		public TgBot(ILogger<TgBot> logger) {
 			_logger = logger;
 		}
 
-		public async Task SendMessage(string token, string chatID, List<string> msgs, bool htmlMode = false) {
-			if (msgs.Count == 0) {
+		public async Task SendMessage(NotifyConfig config, List<FreeGameRecord> records) {
+			if (records.Count == 0) {
 				_logger.LogInformation("No new notifications !");
 				return;
 			}
 
-			BotClient = new TelegramBotClient(token: token);
-			int count = 1;
+			var BotClient = new TelegramBotClient(config.TelegramToken);
+
 			try {
-				foreach (var msg in msgs) {
-					_logger.LogDebug("Sending Message {0}", count++);
+				foreach (var record in records) {
+					_logger.LogDebug("Sending Message {0}", record.Title);
 					await BotClient.SendTextMessageAsync(
-						chatId: chatID,
-						text: msg,
-						parseMode: htmlMode ? ParseMode.Html : ParseMode.Default
+						chatId: config.TelegramChatID,
+						text: record.ToTelegramMessage(),
+						parseMode: ParseMode.Html
 					);
 				}
 			} catch (Exception) {

@@ -3,8 +3,9 @@ using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Microsoft.Playwright;
 using Microsoft.Extensions.Logging;
+using IndiegalaFreebieNotifier.Model;
 
-namespace IndiegalaFreebieNotifier {
+namespace IndiegalaFreebieNotifier.Module {
 	class Scraper : IDisposable {
 		private readonly ILogger<Scraper> _logger;
 		private readonly string url = "https://freebies.indiegala.com/";
@@ -14,7 +15,7 @@ namespace IndiegalaFreebieNotifier {
 			Microsoft.Playwright.Program.Main(new string[] { "install", "webkit" });
 		}
 
-		public async Task<string> GetHtmlSource() {
+		public async Task<string> GetHtmlSource(Config config) {
 			try {
 				_logger.LogDebug("Getting page source");
 				var webGet = new HtmlDocument();
@@ -23,6 +24,9 @@ namespace IndiegalaFreebieNotifier {
 				await using var browser = await playwright.Webkit.LaunchAsync(new() { Headless = true });
 
 				var page = await browser.NewPageAsync();
+				page.SetDefaultTimeout(config.TimeOutMilliSecond);
+				page.SetDefaultNavigationTimeout(config.TimeOutMilliSecond);
+
 				await page.GotoAsync(url);
 				await page.WaitForLoadStateAsync();
 				var source = await page.InnerHTMLAsync("*");
