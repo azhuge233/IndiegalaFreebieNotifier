@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 
 namespace IndiegalaFreebieNotifier.Model {
 	public class FreeGameRecord {
@@ -17,6 +16,10 @@ namespace IndiegalaFreebieNotifier.Model {
 
 		public string ToEmailMessage() {
 			return new StringBuilder().AppendFormat(NotifyFormatStrings.emailPushHtmlFormat, Title, Url).ToString();
+		}
+
+		public string ToQQMessage() {
+			return new StringBuilder().AppendFormat(NotifyFormatStrings.qqPushFormat, Title, Url).ToString();
 		}
 	}
 }
