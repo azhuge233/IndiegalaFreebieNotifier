@@ -21,5 +21,9 @@ namespace IndiegalaFreebieNotifier.Model {
 		public string ToQQMessage() {
 			return new StringBuilder().AppendFormat(NotifyFormatStrings.qqPushFormat, Title, Url).ToString();
 		}
+
+		public string ToPushPlusMessage() {
+			return new StringBuilder().AppendFormat(NotifyFormatStrings.pushPlusPushHtmlFormat, Title, Url).ToString();
+		}
 	}
 }

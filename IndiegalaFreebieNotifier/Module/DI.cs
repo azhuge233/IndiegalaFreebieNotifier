@@ -22,6 +22,7 @@ namespace IndiegalaFreebieNotifier.Module {
                .AddTransient<TgBot>()
                .AddTransient<Email>()
                .AddTransient<QQPusher>()
+               .AddTransient<PushPlus>()
                .AddLogging(loggingBuilder => {
                    // configure Logging with NLog
                    loggingBuilder.ClearProviders();
@@ -37,6 +38,7 @@ namespace IndiegalaFreebieNotifier.Module {
                .AddTransient<Barker>()
                .AddTransient<Email>()
                .AddTransient<QQPusher>()
+               .AddTransient<PushPlus>()
                .AddLogging(loggingBuilder => {
                    // configure Logging with NLog
                    loggingBuilder.ClearProviders();
