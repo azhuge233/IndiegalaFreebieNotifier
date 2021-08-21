@@ -28,6 +28,8 @@ Check [wiki](https://github.com/azhuge233/SteamDB-FreeGames-dotnet/wiki/Config-D
 
 To schedule the program, use cron.d in Linux(macOS) or Task Scheduler in Windows.
 
+Indiegala has frequency check too, if you send too much requests in a short period of time, Indiegala will return a challenge(captcha) page.
+
 ## My Free Games Collection
 
 - SteamDB
