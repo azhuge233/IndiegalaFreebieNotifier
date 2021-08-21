@@ -12,6 +12,8 @@
 			"领取链接: {1}";
 		public static readonly string pushPlusPushHtmlFormat = "<b>{0}</b><br><br>" +
 			"领取链接: <a href=\"{1}\">{1}</a></b>";
+		public static readonly string dingTalkPushFormat = "{0}\n" +
+			"领取链接: {1}";
 		#endregion
 
 		#region url, title format strings
@@ -33,6 +35,11 @@
 		public static readonly string pushPlusTitleFormat = "{0} new free game(s) - IndiegalaFreebieNotifier";
 		public static readonly string pushPlusBodyFormat = "<br>{0}";
 		public static readonly string pushPlusUrlFormat = "http://www.pushplus.plus/send?token={0}&template=html&title={1}&content=";
+
+		public static readonly string dingTalkUrlFormat = "https://oapi.dingtalk.com/robot/send?access_token={0}";
 		#endregion
+
+		public static readonly string projectLink = "\n\nFrom https://github.com/azhuge233/IndiegalaFreebieNotifier";
+		public static readonly string projectLinkHTML = "<br><br>From <a href=\"https://github.com/azhuge233/IndiegalaFreebieNotifier\">IndiegalaFreebieNotifier</a>";
 	}
 }

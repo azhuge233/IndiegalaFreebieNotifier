@@ -27,7 +27,7 @@ namespace IndiegalaFreebieNotifier.Notifier {
 					_logger.LogDebug("Sending Message {0}", record.Title);
 					await BotClient.SendTextMessageAsync(
 						chatId: config.TelegramChatID,
-						text: record.ToTelegramMessage(),
+						text: $"{record.ToTelegramMessage()}{NotifyFormatStrings.projectLink}",
 						parseMode: ParseMode.Html
 					);
 				}

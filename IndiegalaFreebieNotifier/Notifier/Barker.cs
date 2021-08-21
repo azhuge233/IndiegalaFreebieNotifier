@@ -32,6 +32,7 @@ namespace IndiegalaFreebieNotifier.Notifier {
 							.Append(url)
 							.Append(NotifyFormatStrings.barkUrlTitle)
 							.Append(HttpUtility.UrlEncode(record.ToBarkMessage()))
+							.Append(HttpUtility.UrlEncode(NotifyFormatStrings.projectLink))
 							.Append(new StringBuilder().AppendFormat(NotifyFormatStrings.barkUrlArgs, record.Url, record.Url))
 							.ToString()
 					);

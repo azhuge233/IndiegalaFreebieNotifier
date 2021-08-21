@@ -15,6 +15,9 @@
   "EnablePushPlus": false,
   "PushPlusToken": "",
 
+  "EnableDingTalk": false,
+  "DingTalkBotToken": "",
+
   "EnableEmail": false,
   "SMTPServer": "",
   "SMTPPort": 465,

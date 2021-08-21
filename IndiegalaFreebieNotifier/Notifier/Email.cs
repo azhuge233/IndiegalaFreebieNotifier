@@ -37,7 +37,7 @@ namespace IndiegalaFreebieNotifier.Notifier {
 				pushList.ForEach(record => sb.AppendFormat(NotifyFormatStrings.emailBodyFormat, record.ToEmailMessage()));
 
 				message.Body = new TextPart("html") {
-					Text =sb.ToString()
+					Text =sb.Append(NotifyFormatStrings.projectLinkHTML).ToString()
 				};
 
 				_logger.LogDebug($"Done: {debugCreateMessage}");
