@@ -1,5 +1,5 @@
 # IndiegalaFreebieNotifier
-Same as below repos, fetch data from [https://freebies.indiegala.com/](https://freebies.indiegala.com/) then send notifications through Telegram, Bark, Email, QQ and PushPlus.
+Same as below repos, fetch data from [https://freebies.indiegala.com/](https://freebies.indiegala.com/) then send notifications through Telegram, Bark, Email, QQ, PushPlus and DingTalk.
 
 Demo Telegram Channel [@azhuge233_FreeGames](https://t.me/azhuge233_FreeGames)
 
@@ -24,9 +24,11 @@ Fill your Telegram Bot token and chat ID in config.json
 }
 ```
 
-Check [wiki](https://github.com/azhuge233/SteamDB-FreeGames-dotnet/wiki/Config-Description) for config variable descriptions, `NotifyKeepGamesOnly` is not available for this project.
+Check [wiki](https://github.com/azhuge233/SteamDB-FreeGames-dotnet/wiki/Config-Description) for more config variable descriptions, `NotifyKeepGamesOnly` is not available for this project.
 
 To schedule the program, use cron.d in Linux(macOS) or Task Scheduler in Windows.
+
+Indiegala has frequency check too, if you send too much requests in a short period of time, Indiegala will return a challenge(captcha) page.
 
 ## My Free Games Collection
 
