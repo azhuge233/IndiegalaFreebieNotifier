@@ -3,7 +3,8 @@
 		#region ToMessage() format strings
 		public static readonly string telegramPushFormat = "<b>Indiegala 信息</b>\n\n" +
 			"<i>{0}</i>\n" +
-			"领取链接: {1}";
+			"领取链接: {1}\n\n" +
+			"#Indiegala";
 		public static readonly string barkPushFormat = "{0}\n" +
 			"领取链接: {1}";
 		public static readonly string emailPushHtmlFormat = "<b>{0}</b><br><br>" +
