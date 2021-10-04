@@ -13,8 +13,7 @@ namespace IndiegalaFreebieNotifier.Module {
 		public Scraper(ILogger<Scraper> logger) {
 			_logger = logger;
 			// From https://github.com/microsoft/playwright-dotnet/issues/1545#issuecomment-865199736
-			// Stop using until being fixed, see: https://github.com/microsoft/playwright-dotnet/issues/1765
-			// Microsoft.Playwright.Program.Main(new string[] { "install", "webkit" });
+			Microsoft.Playwright.Program.Main(new string[] { "install", "webkit" });
 		}
 
 		public async Task<string> GetHtmlSource(Config config) {
