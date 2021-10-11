@@ -22,7 +22,7 @@ namespace IndiegalaFreebieNotifier.Module {
 				var webGet = new HtmlDocument();
 
 				var playwright = await Playwright.CreateAsync();
-				await using var browser = await playwright.Webkit.LaunchAsync(new() { Headless = true });
+				await using var browser = await playwright.Webkit.LaunchAsync(new() { Headless = config.EnableHeadless });
 
 				var page = await browser.NewPageAsync();
 				page.SetDefaultTimeout(config.TimeOutMilliSecond);

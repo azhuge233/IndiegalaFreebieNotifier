@@ -21,25 +21,27 @@ namespace IndiegalaFreebieNotifier.Module {
 				var htmlDoc = new HtmlDocument();
 				htmlDoc.LoadHtml(source);
 
-				var freebies = htmlDoc.DocumentNode.SelectNodes(ParseStrings.divXpath).ToList();
+				if (htmlDoc.DocumentNode.SelectNodes(ParseStrings.divXpath) != null) {
+					var freebies = htmlDoc.DocumentNode.SelectNodes(ParseStrings.divXpath).ToList();
 
-				foreach (var each in freebies) {
-					// get article titles and links
-					var title = each.SelectSingleNode(ParseStrings.titleXpath).InnerText;
-					var link = each.SelectSingleNode(ParseStrings.linkXpath).Attributes["href"].Value;
+					foreach (var each in freebies) {
+						// get article titles and links
+						var title = each.SelectSingleNode(ParseStrings.titleXpath).InnerText;
+						var link = each.SelectSingleNode(ParseStrings.linkXpath).Attributes["href"].Value;
 
-					_logger.LogInformation("Found new info: {0}", title);
+						_logger.LogInformation("Found new info: {0}", title);
 
-					// save titles and links to List
-					var newFreeGame = new FreeGameRecord { Title = title, Url = link };
-					parseResult.Records.Add(newFreeGame);
+						// save titles and links to List
+						var newFreeGame = new FreeGameRecord { Title = title, Url = link };
+						parseResult.Records.Add(newFreeGame);
 
-					// push list
-					if (!records.Exists(x => x.Title == newFreeGame.Title && x.Url == newFreeGame.Url)) {
-						_logger.LogInformation("Add {0} to push list", title);
-						parseResult.PushList.Add(newFreeGame);
-					} else _logger.LogInformation("{0} is found in previous records, stop adding it to push list", title);
-				}
+						// push list
+						if (!records.Exists(x => x.Title == newFreeGame.Title && x.Url == newFreeGame.Url)) {
+							_logger.LogInformation("Add {0} to push list", title);
+							parseResult.PushList.Add(newFreeGame);
+						} else _logger.LogInformation("{0} is found in previous records, stop adding it to push list", title);
+					}
+				} else _logger.LogInformation("No freebies currently.");
 
 				_logger.LogDebug("Done");
 				return parseResult;
