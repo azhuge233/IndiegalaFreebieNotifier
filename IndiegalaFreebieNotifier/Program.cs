@@ -22,7 +22,7 @@ namespace IndiegalaFreebieNotifier {
 					// Get page source
 					var source = await services.GetRequiredService<Scraper>().GetHtmlSource(config);
 					//var source = System.IO.File.ReadAllText("test.html");
-					
+
 					// Parse page source
 					var parseResult = services.GetRequiredService<Parser>().Parse(source, jsonOp.LoadData());
 
