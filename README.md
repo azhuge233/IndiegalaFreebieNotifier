@@ -1,5 +1,5 @@
 # IndiegalaFreebieNotifier
-Same as below repos, fetch data from [https://freebies.indiegala.com/](https://freebies.indiegala.com/) then send notifications through Telegram, Bark, Email, QQ, PushPlus and DingTalk.
+Same as below repos, a CLI tool fetchs data from [https://freebies.indiegala.com/](https://freebies.indiegala.com/) then sends notifications through Telegram, Bark, Email, QQ, PushPlus and DingTalk.
 
 Demo Telegram Channel [@azhuge233_FreeGames](https://t.me/azhuge233_FreeGames)
 
