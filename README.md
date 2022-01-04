@@ -27,7 +27,7 @@ Fill your Telegram Bot token and chat ID in config.json
 }
 ```
 
-Check [wiki](https://github.com/azhuge233/SteamDB-FreeGames-dotnet/wiki/Config-Description) for more config variable descriptions, `NotifyKeepGamesOnly` is not available for this project.
+Check [wiki](https://github.com/azhuge233/SteamDB-FreeGames-dotnet/wiki/Config-Description) for more config variable descriptions, `NotifyKeepGamesOnly` and any ASF related variables are not available for this project.
 
 ### Repeatedly running
 
