@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using HtmlAgilityPack;
 using Microsoft.Playwright;
 using Microsoft.Extensions.Logging;
@@ -27,6 +28,11 @@ namespace IndiegalaFreebieNotifier.Module {
 				var page = await browser.NewPageAsync();
 				page.SetDefaultTimeout(config.TimeOutMilliSecond);
 				page.SetDefaultNavigationTimeout(config.TimeOutMilliSecond);
+				await page.RouteAsync("**/*", async route => {
+					var blockList = new List<string> { "stylesheet", "image", "font" };
+					if (blockList.Contains(route.Request.ResourceType)) await route.AbortAsync();
+					else await route.ContinueAsync();
+				});
 
 				await page.GotoAsync(url);
 				await page.WaitForLoadStateAsync();
