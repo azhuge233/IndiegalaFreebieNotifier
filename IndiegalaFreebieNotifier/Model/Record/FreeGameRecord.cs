@@ -29,5 +29,9 @@ namespace IndiegalaFreebieNotifier.Model {
 		public string ToDingTalkMessage() {
 			return new StringBuilder().AppendFormat(NotifyFormatStrings.dingTalkPushFormat, Title, Url).ToString();
 		}
+
+		public string ToPushDeerMessage() {
+			return new StringBuilder().AppendFormat(NotifyFormatStrings.pushDeerPushFormat, Title, Url).ToString();
+		}
 	}
 }

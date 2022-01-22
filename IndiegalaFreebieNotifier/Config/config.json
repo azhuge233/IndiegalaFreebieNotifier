@@ -18,6 +18,9 @@
   "EnableDingTalk": false,
   "DingTalkBotToken": "",
 
+  "EnablePushDeer": false,
+  "PushDeerToken": "",
+
   "EnableEmail": false,
   "SMTPServer": "",
   "SMTPPort": 465,
