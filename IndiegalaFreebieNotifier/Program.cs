@@ -36,7 +36,6 @@ namespace IndiegalaFreebieNotifier {
 				logger.Info(" - Job End -\n\n");
 			} catch (Exception ex) {
 				logger.Error(ex.Message);
-				logger.Error(ex.InnerException.Message);
 			} finally {
 				LogManager.Shutdown();
 			}
