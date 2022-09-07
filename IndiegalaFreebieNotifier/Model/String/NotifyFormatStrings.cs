@@ -17,6 +17,7 @@
 			"领取链接: {1}";
 		public static readonly string pushDeerPushFormat = "{0}\n" +
 			"领取链接: {1}";
+		public static readonly string discordPushFormat = "领取链接: {0}";
 		#endregion
 
 		#region url, title format strings

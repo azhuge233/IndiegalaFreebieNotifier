@@ -21,6 +21,9 @@
   "EnablePushDeer": false,
   "PushDeerToken": "",
 
+  "EnableDiscord": false,
+  "DiscordWebhookURL": "",
+
   "EnableEmail": false,
   "SMTPServer": "",
   "SMTPPort": 465,

@@ -1,6 +1,6 @@
 # IndiegalaFreebieNotifier
 
-Same as below repos, a CLI tool fetchs data from [https://freebies.indiegala.com/](https://freebies.indiegala.com/) then sends notifications through Telegram, Bark, Email, QQ, PushPlus and DingTalk.
+A CLI tool fetchs data from [https://freebies.indiegala.com/](https://freebies.indiegala.com/) then sends notifications through Telegram, Bark, Email, QQ, PushPlus, DingTalk and Discord.
 
 Indiegala has frequency check too, if you send too much requests in a short period of time, Indiegala will return a challenge(captcha) page.
 
