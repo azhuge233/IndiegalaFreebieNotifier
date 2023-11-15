@@ -5,6 +5,8 @@
     <TargetFramework>net7.0</TargetFramework>
     <RootNamespace>IndiegalaFreebieNotifier</RootNamespace>
     <SatelliteResourceLanguages>en;zh-Hans</SatelliteResourceLanguages>
+		<DebugSymbols>false</DebugSymbols>
+		<DebugType>none</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
