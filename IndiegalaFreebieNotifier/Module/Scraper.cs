@@ -24,8 +24,9 @@ namespace IndiegalaFreebieNotifier.Module {
 
 				var playwright = await Playwright.CreateAsync();
 				await using var browser = await playwright.Webkit.LaunchAsync(new() { Headless = config.EnableHeadless });
+				var context = await browser.NewContextAsync(new() { IgnoreHTTPSErrors = true });
 
-				var page = await browser.NewPageAsync();
+				var page = await context.NewPageAsync();
 				page.SetDefaultTimeout(config.TimeOutMilliSecond);
 				page.SetDefaultNavigationTimeout(config.TimeOutMilliSecond);
 				await page.RouteAsync("**/*", async route => {
