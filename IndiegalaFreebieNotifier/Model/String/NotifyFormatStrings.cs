@@ -1,23 +1,23 @@
 ﻿namespace IndiegalaFreebieNotifier.Model {
 	public static class NotifyFormatStrings {
 		#region ToMessage() format strings
-		public static readonly string telegramPushFormat = "<b>Indiegala 信息</b>\n\n" +
+		public static readonly string telegramPushFormat = "<b>Indiegala</b>\n\n" +
 			"<i>{0}</i>\n" +
-			"领取链接: {1}\n\n" +
+			"Link: {1}\n\n" +
 			"#Indiegala";
 		public static readonly string barkPushFormat = "{0}\n" +
-			"领取链接: {1}";
+			"Link: {1}";
 		public static readonly string emailPushHtmlFormat = "<b>{0}</b><br><br>" +
-			"领取链接: <a href=\"{1}\">{1}</a></b>";
+			"Link: <a href=\"{1}\">{1}</a></b>";
 		public static readonly string qqPushFormat = "{0}\n" +
-			"领取链接: {1}";
+			"Link: {1}";
 		public static readonly string pushPlusPushHtmlFormat = "<b>{0}</b><br><br>" +
-			"领取链接: <a href=\"{1}\">{1}</a></b>";
+			"Link: <a href=\"{1}\">{1}</a></b>";
 		public static readonly string dingTalkPushFormat = "{0}\n" +
-			"领取链接: {1}";
+			"Link: {1}";
 		public static readonly string pushDeerPushFormat = "{0}\n" +
-			"领取链接: {1}";
-		public static readonly string discordPushFormat = "领取链接: {0}";
+			"Link: {1}";
+		public static readonly string discordPushFormat = "Link: {0}";
 		#endregion
 
 		#region url, title format strings
@@ -37,7 +37,7 @@
 		public static readonly string qqRedUrlFormat = "ws://{0}:{1}";
 		public static readonly string qqRedWSConnectPacketType = "meta::connect";
 		public static readonly string qqRedWSSendPacketType = "message::send";
-		public static readonly string qqMessageFormat = "Indigala 信息\n\n{0}";
+		public static readonly string qqMessageFormat = "Indiegala\n\n{0}";
 
 		public static readonly string pushPlusTitleFormat = "{0} new free game(s) - IndiegalaFreebieNotifier";
 		public static readonly string pushPlusBodyFormat = "<br>{0}";
