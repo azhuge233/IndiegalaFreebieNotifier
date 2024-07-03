@@ -14,7 +14,7 @@ namespace IndiegalaFreebieNotifier.Module {
 		public Scraper(ILogger<Scraper> logger) {
 			_logger = logger;
 			// From https://github.com/microsoft/playwright-dotnet/issues/1545#issuecomment-865199736
-			Microsoft.Playwright.Program.Main(new string[] { "install", "webkit" });
+			Microsoft.Playwright.Program.Main(["install", "firefox"]);
 		}
 
 		public async Task<string> GetHtmlSource(Config config) {
@@ -23,10 +23,9 @@ namespace IndiegalaFreebieNotifier.Module {
 				var webGet = new HtmlDocument();
 
 				var playwright = await Playwright.CreateAsync();
-				await using var browser = await playwright.Webkit.LaunchAsync(new() { Headless = config.EnableHeadless });
-				var context = await browser.NewContextAsync(new() { IgnoreHTTPSErrors = true });
+				await using var browser = await playwright.Firefox.LaunchAsync(new() { Headless = config.EnableHeadless });
 
-				var page = await context.NewPageAsync();
+				var page = await browser.NewPageAsync();
 				page.SetDefaultTimeout(config.TimeOutMilliSecond);
 				page.SetDefaultNavigationTimeout(config.TimeOutMilliSecond);
 				await page.RouteAsync("**/*", async route => {
