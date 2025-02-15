@@ -31,59 +31,63 @@ namespace IndiegalaFreebieNotifier.Module {
 			try {
 				_logger.LogDebug(debugNotify);
 
+				var notifyTasks = new List<Task>();
+
 				// Telegram notifications
 				if (config.EnableTelegram) {
 					_logger.LogInformation(debugEnabledFormat, "Telegram");
-					await services.GetRequiredService<TgBot>().SendMessage(config, pushList);
+					notifyTasks.Add(services.GetRequiredService<TgBot>().SendMessage(config, pushList));
 				} else _logger.LogInformation(debugDisabledFormat, "Telegram");
 
 				// Bark notifications
 				if (config.EnableBark) {
 					_logger.LogInformation(debugEnabledFormat, "Bark");
-					await services.GetRequiredService<Barker>().SendMessage(config, pushList);
+					notifyTasks.Add(services.GetRequiredService<Barker>().SendMessage(config, pushList));
 				} else _logger.LogInformation(debugDisabledFormat, "Bark");
 
 				//QQ notifications
 				if (config.EnableQQ) {
 					_logger.LogInformation(debugEnabledFormat, "QQ");
-					await services.GetRequiredService<QQPusher>().SendMessage(config, pushList);
+					notifyTasks.Add(services.GetRequiredService<QQPusher>().SendMessage(config, pushList));
 				} else _logger.LogInformation(debugDisabledFormat, "QQ");
 
 				//QQ Red (Chronocat) notifications
 				if (config.EnableRed) {
 					_logger.LogInformation(debugEnabledFormat, "QQ Red (Chronocat)");
-					await services.GetRequiredService<QQRed>().SendMessage(config, pushList);
+					notifyTasks.Add(services.GetRequiredService<QQRed>().SendMessage(config, pushList));
 				} else _logger.LogInformation(debugDisabledFormat, "QQ Red (Chronocat)");
 
 				// PushPlus notifications
 				if (config.EnablePushPlus) {
 					_logger.LogInformation(debugEnabledFormat, "PushPlus");
-					await services.GetRequiredService<PushPlus>().SendMessage(config, pushList);
+					notifyTasks.Add(services.GetRequiredService<PushPlus>().SendMessage(config, pushList));
 				} else _logger.LogInformation(debugDisabledFormat, "PushPlus");
 
 				// DingTalk notifications
 				if (config.EnableDingTalk) {
 					_logger.LogInformation(debugEnabledFormat, "DingTalk");
-					await services.GetRequiredService<DingTalk>().SendMessage(config, pushList);
+					notifyTasks.Add(services.GetRequiredService<DingTalk>().SendMessage(config, pushList));
 				} else _logger.LogInformation(debugDisabledFormat, "DingTalk");
 
 				// PushDeer notifications
 				if (config.EnablePushDeer) {
 					_logger.LogInformation(debugEnabledFormat, "PushDeer");
-					await services.GetRequiredService<PushDeer>().SendMessage(config, pushList);
+					notifyTasks.Add(services.GetRequiredService<PushDeer>().SendMessage(config, pushList));
 				} else _logger.LogInformation(debugDisabledFormat, "PushDeer");
 
 				// Discord notifications
 				if (config.EnableDiscord) {
 					_logger.LogInformation(debugEnabledFormat, "Discord");
-					await services.GetRequiredService<Discord>().SendMessage(config, pushList);
+					notifyTasks.Add(services.GetRequiredService<Discord>().SendMessage(config, pushList));
 				} else _logger.LogInformation(debugDisabledFormat, "Discord");
 
 				// Email notifications
 				if (config.EnableEmail) {
 					_logger.LogInformation(debugEnabledFormat, "Email");
-					await services.GetRequiredService<Email>().SendMessage(config, pushList);
+					notifyTasks.Add(services.GetRequiredService<Email>().SendMessage(config, pushList));
 				} else _logger.LogInformation(debugDisabledFormat, "Email");
+
+				await Task.WhenAll(notifyTasks);
 
 				_logger.LogDebug($"Done: {debugNotify}");
 			} catch (Exception) {
