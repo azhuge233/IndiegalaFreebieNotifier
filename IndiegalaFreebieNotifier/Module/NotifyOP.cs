@@ -87,6 +87,12 @@ namespace IndiegalaFreebieNotifier.Module {
 					notifyTasks.Add(services.GetRequiredService<Email>().SendMessage(config, pushList));
 				} else _logger.LogInformation(debugDisabledFormat, "Email");
 
+				// Meow notifications
+				if (config.EnableMeow) {
+					_logger.LogInformation(debugEnabledFormat, "Meow");
+					notifyTasks.Add(services.GetRequiredService<Meow>().SendMessage(config, pushList));
+				} else _logger.LogInformation(debugDisabledFormat, "Meow");
+
 				await Task.WhenAll(notifyTasks);
 
 				_logger.LogDebug($"Done: {debugNotify}");

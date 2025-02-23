@@ -18,6 +18,8 @@
 		public static readonly string pushDeerPushFormat = "{0}\n" +
 			"Link: {1}";
 		public static readonly string discordPushFormat = "Link: {0}";
+		public static readonly string meowPushFormat = "{0}\n" +
+			"Link: {1}";
 		#endregion
 
 		#region url, title format strings
@@ -46,6 +48,9 @@
 		public static readonly string dingTalkUrlFormat = "https://oapi.dingtalk.com/robot/send?access_token={0}";
 
 		public static readonly string pushDeerUrlFormat = "https://api2.pushdeer.com/message/push?pushkey={0}&&text={1}";
+
+		public static readonly string meowUrlFormat = "{0}/{1}";
+		public static readonly string meowUrlTitle = "IndiegalaFreebieNotifier";
 		#endregion
 
 		public static readonly string projectLink = "\n\nFrom https://github.com/azhuge233/IndiegalaFreebieNotifier";

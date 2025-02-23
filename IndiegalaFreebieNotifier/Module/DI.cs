@@ -27,6 +27,7 @@ namespace IndiegalaFreebieNotifier.Module {
                .AddTransient<DingTalk>()
                .AddTransient<PushDeer>()
                .AddTransient<Discord>()
+               .AddTransient<Meow>()
                .AddLogging(loggingBuilder => {
                    // configure Logging with NLog
                    loggingBuilder.ClearProviders();
@@ -47,6 +48,7 @@ namespace IndiegalaFreebieNotifier.Module {
                .AddTransient<DingTalk>()
                .AddTransient<PushDeer>()
 			   .AddTransient<Discord>()
+			   .AddTransient<Meow>()
 			   .AddLogging(loggingBuilder => {
                    // configure Logging with NLog
                    loggingBuilder.ClearProviders();
