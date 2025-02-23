@@ -27,10 +27,12 @@ namespace IndiegalaFreebieNotifier.Notifier {
 				var url = new StringBuilder().AppendFormat(NotifyFormatStrings.dingTalkUrlFormat, config.DingTalkBotToken).ToString();
 				var content = new DingTalkPostContent();
 
+				var client = new HttpClient();
+
 				foreach (var record in records) {
 					content.Text.Content_ = $"{record.ToDingTalkMessage()}{NotifyFormatStrings.projectLink}";
 					var data = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
-					var resp = await new HttpClient().PostAsync(url, data);
+					var resp = await client.PostAsync(url, data);
 					_logger.LogDebug(await resp.Content.ReadAsStringAsync());
 				}
 
