@@ -1,7 +1,7 @@
 ﻿using IndiegalaFreebieNotifier.Model;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using SteamDBFreeGames.Models.PostContent;
+using IndiegalaFreebieNotifier.Models.PostContent;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;

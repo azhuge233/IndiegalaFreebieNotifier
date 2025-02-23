@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace SteamDBFreeGames.Models.PostContent {
+namespace IndiegalaFreebieNotifier.Models.PostContent {
 	public class MeowPostContent {
 		[JsonProperty("title")]
 		public string Title { get; set; }
