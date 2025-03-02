@@ -35,8 +35,8 @@
 		public static readonly string emailTitleFormat = "{0} new free game(s) - IndiegalaFreebieNotifier";
 		public static readonly string emailBodyFormat = "<br>{0}";
 
-		public static readonly string qqUrlFormat = "http://{0}:{1}/send_private_msg?access_token={2}";
-		public static readonly string qqRedUrlFormat = "ws://{0}:{1}/?access_token={2}";
+		public static readonly string qqHttpUrlFormat = "http://{0}:{1}/send_private_msg?access_token={2}";
+		public static readonly string qqWebSocketUrlFormat = "ws://{0}:{1}/?access_token={2}";
 		public static readonly string qqWebSocketSendAction = "send_private_msg";
 		public static readonly string qqMessageFormat = "Indiegala\n\n{0}";
 
