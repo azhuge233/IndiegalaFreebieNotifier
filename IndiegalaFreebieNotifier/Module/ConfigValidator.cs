@@ -106,6 +106,12 @@ namespace IndiegalaFreebieNotifier.Module {
 						throw new Exception(message: "No Meow nickname provided!");
 				}
 
+				//AutoClaim
+				if (config.EnableAutoClaim) { 
+					if(string.IsNullOrEmpty(config.Cookies))
+						throw new Exception(message: "No cookies provided for auto claim!");
+				}
+
 				_logger.LogDebug($"Done: {debugCheckValid}");
 			} catch (Exception) {
 				_logger.LogError($"Error: {debugCheckValid}");
