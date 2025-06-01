@@ -51,7 +51,7 @@ namespace IndiegalaFreebieNotifier.Module {
 
 		public async Task<string> GetPageSource(string url, Config config) {
 			try {
-				_logger.LogDebug("Getting page source: {0}", url);
+				_logger.LogDebug($"Getting page source: {url}");
 				var webGet = new HtmlDocument();
 
 				var playwright = await Playwright.CreateAsync();
