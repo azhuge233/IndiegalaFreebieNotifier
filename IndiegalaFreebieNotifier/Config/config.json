@@ -44,5 +44,8 @@
   "MeowNickname": "",
 
   "EnableHeadless": true,
-  "TimeOutMilliSecond": 30000
+  "TimeOutMilliSecond": 30000,
+
+  "EnableAutoClaim": false,
+  "Cookies":  ""
 }
