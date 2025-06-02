@@ -19,6 +19,23 @@ namespace IndiegalaFreebieNotifier.Module {
 			Microsoft.Playwright.Program.Main(["install", "firefox"]);
 		}
 
+		public async Task<string> GetHomeSource() {
+			try {
+				_logger.LogDebug("Getting home page source");
+				var resp = await Client.GetAsync(homeUrl);
+
+				var source = await resp.Content.ReadAsStringAsync();
+
+				_logger.LogDebug("Done");
+				return source;
+			} catch (Exception) {
+				_logger.LogError("Scraping Error");
+				throw;
+			} finally {
+				Dispose();
+			}
+		}
+
 		public async Task<string> GetHomeSource(Config config) {
 			try {
 				_logger.LogDebug("Getting home page source");
