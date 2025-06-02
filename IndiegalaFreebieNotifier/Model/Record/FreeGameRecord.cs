@@ -7,40 +7,41 @@ namespace IndiegalaFreebieNotifier.Model {
 		public string Title { get; set; }
 
 		public string ID { get; set; }
+
 		public string ToTelegramMessage() {
-			return new StringBuilder().AppendFormat(NotifyFormatStrings.telegramPushFormat, Title, Url).ToString();
+			return string.Format(NotifyFormatStrings.telegramPushFormat, Title, Url);
 		}
 
 		public string ToBarkMessage() {
-			return new StringBuilder().AppendFormat(NotifyFormatStrings.barkPushFormat, Title, Url).ToString();
+			return string.Format(NotifyFormatStrings.barkPushFormat, Title, Url);
 		}
 
 		public string ToEmailMessage() {
-			return new StringBuilder().AppendFormat(NotifyFormatStrings.emailPushHtmlFormat, Title, Url).ToString();
+			return string.Format(NotifyFormatStrings.emailPushHtmlFormat, Title, Url);
 		}
 
 		public string ToQQMessage() {
-			return new StringBuilder().AppendFormat(NotifyFormatStrings.qqPushFormat, Title, Url).ToString();
+			return string.Format(NotifyFormatStrings.qqPushFormat, Title, Url);
 		}
 
 		public string ToPushPlusMessage() {
-			return new StringBuilder().AppendFormat(NotifyFormatStrings.pushPlusPushHtmlFormat, Title, Url).ToString();
+			return string.Format(NotifyFormatStrings.pushPlusPushHtmlFormat, Title, Url);
 		}
 
 		public string ToDingTalkMessage() {
-			return new StringBuilder().AppendFormat(NotifyFormatStrings.dingTalkPushFormat, Title, Url).ToString();
+			return string.Format(NotifyFormatStrings.dingTalkPushFormat, Title, Url);
 		}
 
 		public string ToPushDeerMessage() {
-			return new StringBuilder().AppendFormat(NotifyFormatStrings.pushDeerPushFormat, Title, Url).ToString();
+			return string.Format(NotifyFormatStrings.pushDeerPushFormat, Title, Url);
 		}
 
 		public string ToDiscordMessage() {
-			return new StringBuilder().AppendFormat(NotifyFormatStrings.discordPushFormat, Url).ToString();
+			return string.Format(NotifyFormatStrings.discordPushFormat, Url);
 		}
 
 		public string ToMeowMessage() {
-			return new StringBuilder().AppendFormat(NotifyFormatStrings.meowPushFormat, Title, Url).ToString();
+			return string.Format(NotifyFormatStrings.meowPushFormat, Title, Url);
 		}
 	}
 }
