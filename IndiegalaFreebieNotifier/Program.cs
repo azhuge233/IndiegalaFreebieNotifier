@@ -31,6 +31,9 @@ namespace IndiegalaFreebieNotifier {
 
 					// Write new records
 					jsonOp.WriteData(parseResult.Records);
+
+					// auto claim
+					await services.GetRequiredService<AutoClaimer>().Claim(config, parseResult.PushList);
 				}
 
 				logger.Info(" - Job End -\n\n");
