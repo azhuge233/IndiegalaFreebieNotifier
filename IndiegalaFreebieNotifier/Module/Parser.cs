@@ -27,16 +27,14 @@ namespace IndiegalaFreebieNotifier.Module {
 
 					foreach (var each in freebies) {
 						// get article titles and links
-						var title = each.SelectSingleNode(ParseStrings.titleXpath);
+						var titleDiv = each.SelectSingleNode(ParseStrings.titleXpath);
 						var link = each.SelectSingleNode(ParseStrings.linkXpath);
 						var img = each.SelectSingleNode(ParseStrings.imgXpath);
 
-						_logger.LogInformation($"Found new info: {title}");
-
 						var newFreeGame = new FreeGameRecord { 
-							Title = title.InnerText,
+							Title = titleDiv.InnerText,
 							Url = link.Attributes["href"].Value,
-							ID = Regex.Match(img.Attributes["src"].Value, ParseStrings.IDRegex).Value
+							ID = Regex.Match(img.Attributes["data-img-src"].Value, ParseStrings.IDRegex).Value
 						};
 
 						_logger.LogDebug($"New freebie: {newFreeGame.Title} | {newFreeGame.Url} | {newFreeGame.ID}");
@@ -45,9 +43,9 @@ namespace IndiegalaFreebieNotifier.Module {
 
 						// push list
 						if (!records.Exists(x => x.Title == newFreeGame.Title && x.Url == newFreeGame.Url)) {
-							_logger.LogInformation($"Add {title} to push list");
+							_logger.LogInformation($"Add {newFreeGame.Title} to push list");
 							parseResult.PushList.Add(newFreeGame);
-						} else _logger.LogInformation($"{title} is found in previous records, stop adding it to push list");
+						} else _logger.LogInformation($"{newFreeGame.Title} is found in previous records, stop adding it to push list");
 					}
 				} else _logger.LogInformation("No freebies currently.");
 
