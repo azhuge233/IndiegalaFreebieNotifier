@@ -20,7 +20,7 @@ namespace IndiegalaFreebieNotifier {
 					services.GetRequiredService<ConfigValidator>().CheckValid(config);
 
 					// Get page source
-					var source = await services.GetRequiredService<Scraper>().GetHomeSource(config);
+					var source = await services.GetRequiredService<Scraper>().GetHomeSource();
 					//var source = System.IO.File.ReadAllText("test.html");
 
 					// Parse page source
