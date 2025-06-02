@@ -29,7 +29,7 @@ namespace IndiegalaFreebieNotifier.Module {
 						var title = each.SelectSingleNode(ParseStrings.titleXpath).InnerText;
 						var link = each.SelectSingleNode(ParseStrings.linkXpath).Attributes["href"].Value;
 
-						_logger.LogInformation("Found new info: {0}", title);
+						_logger.LogInformation($"Found new info: {title}");
 
 						// save titles and links to List
 						var newFreeGame = new FreeGameRecord { Title = title, Url = link };
@@ -37,9 +37,9 @@ namespace IndiegalaFreebieNotifier.Module {
 
 						// push list
 						if (!records.Exists(x => x.Title == newFreeGame.Title && x.Url == newFreeGame.Url)) {
-							_logger.LogInformation("Add {0} to push list", title);
+							_logger.LogInformation($"Add {title} to push list");
 							parseResult.PushList.Add(newFreeGame);
-						} else _logger.LogInformation("{0} is found in previous records, stop adding it to push list", title);
+						} else _logger.LogInformation($"{title} is found in previous records, stop adding it to push list");
 					}
 				} else _logger.LogInformation("No freebies currently.");
 
