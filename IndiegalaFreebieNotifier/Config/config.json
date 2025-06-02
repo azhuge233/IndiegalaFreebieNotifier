@@ -43,9 +43,6 @@
   "MeowAddress": "https://api.chuckfang.com",
   "MeowNickname": "",
 
-  "EnableHeadless": true,
-  "TimeOutMilliSecond": 30000,
-
   "EnableAutoClaim": false,
   "Cookies":  ""
 }
