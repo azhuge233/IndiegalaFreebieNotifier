@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
 using IndiegalaFreebieNotifier.Model;
+using System.Text.RegularExpressions;
 
 namespace IndiegalaFreebieNotifier.Module {
 	class Parser : IDisposable {
@@ -26,13 +27,20 @@ namespace IndiegalaFreebieNotifier.Module {
 
 					foreach (var each in freebies) {
 						// get article titles and links
-						var title = each.SelectSingleNode(ParseStrings.titleXpath).InnerText;
-						var link = each.SelectSingleNode(ParseStrings.linkXpath).Attributes["href"].Value;
+						var title = each.SelectSingleNode(ParseStrings.titleXpath);
+						var link = each.SelectSingleNode(ParseStrings.linkXpath);
+						var img = each.SelectSingleNode(ParseStrings.imgXpath);
 
 						_logger.LogInformation($"Found new info: {title}");
 
-						// save titles and links to List
-						var newFreeGame = new FreeGameRecord { Title = title, Url = link };
+						var newFreeGame = new FreeGameRecord { 
+							Title = title.InnerText,
+							Url = link.Attributes["href"].Value,
+							ID = Regex.Match(img.Attributes["src"].Value, ParseStrings.IDRegex).Value
+						};
+
+						_logger.LogDebug($"New freebie: {newFreeGame.Title} | {newFreeGame.Url} | {newFreeGame.ID}");
+
 						parseResult.Records.Add(newFreeGame);
 
 						// push list
