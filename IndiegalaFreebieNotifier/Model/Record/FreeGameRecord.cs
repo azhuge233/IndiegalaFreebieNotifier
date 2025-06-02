@@ -6,6 +6,7 @@ namespace IndiegalaFreebieNotifier.Model {
 
 		public string Title { get; set; }
 
+		public string ID { get; set; }
 		public string ToTelegramMessage() {
 			return new StringBuilder().AppendFormat(NotifyFormatStrings.telegramPushFormat, Title, Url).ToString();
 		}
