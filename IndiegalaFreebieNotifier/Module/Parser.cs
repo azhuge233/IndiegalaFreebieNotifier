@@ -13,7 +13,7 @@ namespace IndiegalaFreebieNotifier.Module {
 			_logger = logger;
 		}
 
-		public ParseResult Parse(string source, Config config, List<FreeGameRecord> records) {
+		public ParseResult Parse(string source, List<FreeGameRecord> records) {
 			try {
 				_logger.LogDebug("Start parsing");
 				var parseResult = new ParseResult();

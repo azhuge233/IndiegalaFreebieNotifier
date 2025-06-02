@@ -24,7 +24,7 @@ namespace IndiegalaFreebieNotifier {
 					//var source = System.IO.File.ReadAllText("test.html");
 
 					// Parse page source
-					var parseResult = services.GetRequiredService<Parser>().Parse(source, config, jsonOp.LoadData());
+					var parseResult = services.GetRequiredService<Parser>().Parse(source, jsonOp.LoadData());
 
 					//Send notifications
 					await services.GetRequiredService<NotifyOP>().Notify(config, parseResult.PushList);
