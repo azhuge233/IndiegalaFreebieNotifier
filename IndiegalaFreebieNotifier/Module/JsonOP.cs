@@ -56,6 +56,19 @@ namespace IndiegalaFreebieNotifier.Module {
 			}
 		}
 
+		public void SaveConfig(Config config) {
+			try {
+				_logger.LogDebug("Saving config");
+				string json = JsonConvert.SerializeObject(config, Formatting.Indented);
+				File.WriteAllText(configPath, string.Empty);
+				File.WriteAllText(configPath, json);
+				_logger.LogDebug("Done");
+			} catch (Exception) {
+				_logger.LogError("Saving config failed.");
+				throw;
+			}
+		}
+
 		public void Dispose() {
 			GC.SuppressFinalize(this);
 		}
