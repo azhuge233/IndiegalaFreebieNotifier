@@ -41,6 +41,8 @@ namespace IndiegalaFreebieNotifier.Module {
 				var page = await browser.NewPageAsync();
 
 				await page.RouteAsync("**/*", async route => {
+					// add google.com and gstatic.com to whitelist
+					// so browser can properly load recaptcha
 					HashSet<string> whitelist = ["indiegala.com", "google.com", "gstatic.com"];
 					if (whitelist.Any(domain => route.Request.Url.Contains(domain))) await route.ContinueAsync();
 					else await route.AbortAsync();
