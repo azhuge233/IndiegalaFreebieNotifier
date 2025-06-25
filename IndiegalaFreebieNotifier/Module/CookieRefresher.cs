@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 namespace IndiegalaFreebieNotifier.Module {
 	internal class CookieRefresher : IDisposable {
 		private readonly ILogger<CookieRefresher> _logger;
-
 		private readonly IServiceProvider services = DI.BuildDiCaptchaSolverOnly();
 
 		private readonly Random rd = new();
@@ -55,7 +54,7 @@ namespace IndiegalaFreebieNotifier.Module {
 				await page.GetByRole(AriaRole.Textbox, new() { Name = "Password" }).FillAsync(config.Password);
 				await Task.Delay(GetRandomDelay());
 
-				var solveResult = await services.GetRequiredService<CaptchaSolver>().SolveReCaptchaAsync();
+				var solveResult = await services.GetRequiredService<CaptchaSolver>().SolveReCaptchaAsync(config.TwoCaptchaApiKey);
 				await page.EvaluateAsync($"solveResult => document.querySelector('#g-recaptcha-response').innerHTML = solveResult", solveResult);
 
 				_logger.LogDebug("Text injected");
