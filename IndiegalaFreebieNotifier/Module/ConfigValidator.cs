@@ -112,6 +112,16 @@ namespace IndiegalaFreebieNotifier.Module {
 						throw new Exception(message: "No cookies provided for auto claim!");
 				}
 
+				//Cookie Auto Refresh
+				if (config.EnableCookieAutoRefresh) { 
+					if(string.IsNullOrEmpty(config.TwoCaptchaApiKey))
+						throw new Exception(message: "No 2Captcha API key provided for cookie auto refresh!");
+					if(string.IsNullOrEmpty(config.Username))
+						throw new Exception(message: "No username provided for cookie auto refresh!");
+					if(string.IsNullOrEmpty(config.Password))
+						throw new Exception(message: "No password provided for cookie auto refresh!");
+				}
+
 				_logger.LogDebug($"Done: {debugCheckValid}");
 			} catch (Exception) {
 				_logger.LogError($"Error: {debugCheckValid}");
