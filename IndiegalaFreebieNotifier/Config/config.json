@@ -44,7 +44,7 @@
   "MeowNickname": "",
 
   "EnableAutoClaim": false,
-  "Cookies": "",
+  "Cookie": "sessionid=;",
 
   "EnableCookieAutoRefresh": false,
   "TwoCaptchaApiKey": "",
