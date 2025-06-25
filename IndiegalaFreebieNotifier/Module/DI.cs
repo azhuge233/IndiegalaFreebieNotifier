@@ -19,6 +19,7 @@ namespace IndiegalaFreebieNotifier.Module {
                .AddTransient<Parser>()
                .AddTransient<NotifyOP>()
                .AddTransient<AutoClaimer>()
+               .AddTransient<CaptchaSolver>()
                .AddTransient<Barker>()
                .AddTransient<TgBot>()
                .AddTransient<Email>()
