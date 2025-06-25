@@ -1,10 +1,18 @@
-﻿using System;
+﻿using IndiegalaFreebieNotifier.Model;
 using Microsoft.Extensions.Logging;
-using IndiegalaFreebieNotifier.Model;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace IndiegalaFreebieNotifier.Module {
 	class ConfigValidator : IDisposable {
 		private readonly ILogger<ConfigValidator> _logger;
+
+		private readonly string CookieTestUrl = "https://www.indiegala.com/developers/ajax/add-to-library/6ba4b90d-ec12-4343-bd6f-415f0881ebae/die-young-prologue/freebies";
+
+		private readonly HashSet<string> validResults = ["ok", "added"];
 
 		#region debug strings
 		private readonly string debugCheckValid = "Check config file validation";
@@ -128,6 +136,37 @@ namespace IndiegalaFreebieNotifier.Module {
 				throw;
 			} finally {
 				Dispose();
+			}
+		}
+
+		public async Task<bool> CheckCookie(string cookie) {
+			try {
+				_logger.LogDebug("Check cookie validity");
+
+				using var client = new HttpClient();
+
+				client.DefaultRequestHeaders.Add("Cookie", cookie);
+
+				var resp = await client.GetAsync(CookieTestUrl);
+
+				if (resp.IsSuccessStatusCode) {
+					var jsonString = await resp.Content.ReadAsStringAsync();
+
+					var jsonData = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonString);
+
+					if (jsonData == null || !jsonData.TryGetValue("status", out _) || jsonData["status"] == "login") {
+						_logger.LogError("Cookie is invalid or expired");
+						return false;
+					} else {
+						_logger.LogDebug("Cookie is valid");
+						return true;
+					}
+				} else _logger.LogError("HTTP request failed");
+
+				return false;
+			} catch (Exception) {
+				_logger.LogError("Error: Check cookie validity");
+				throw;
 			}
 		}
 
