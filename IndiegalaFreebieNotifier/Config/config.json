@@ -44,5 +44,10 @@
   "MeowNickname": "",
 
   "EnableAutoClaim": false,
-  "Cookies":  ""
+  "Cookies": "",
+
+  "EnableCookieAutoRefresh": false,
+  "TwoCaptchaApiKey": "",
+  "Username": "",
+  "Password": ""
 }
