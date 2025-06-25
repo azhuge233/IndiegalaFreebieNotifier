@@ -19,6 +19,7 @@ namespace IndiegalaFreebieNotifier.Module {
                .AddTransient<Parser>()
                .AddTransient<NotifyOP>()
                .AddTransient<AutoClaimer>()
+               .AddTransient<CookieRefresher>()
                .AddTransient<CaptchaSolver>()
                .AddTransient<Barker>()
                .AddTransient<TgBot>()
@@ -63,6 +64,18 @@ namespace IndiegalaFreebieNotifier.Module {
 		public static IServiceProvider BuildDiScraperOnly() {
 			return new ServiceCollection()
 			   .AddTransient<Scraper>()
+			   .AddLogging(loggingBuilder => {
+				   // configure Logging with NLog
+				   loggingBuilder.ClearProviders();
+				   loggingBuilder.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+				   loggingBuilder.AddNLog(logConfig);
+			   })
+			   .BuildServiceProvider();
+		}
+
+		public static IServiceProvider BuildDiCaptchaSolverOnly() {
+			return new ServiceCollection()
+			   .AddTransient<CaptchaSolver>()
 			   .AddLogging(loggingBuilder => {
 				   // configure Logging with NLog
 				   loggingBuilder.ClearProviders();
