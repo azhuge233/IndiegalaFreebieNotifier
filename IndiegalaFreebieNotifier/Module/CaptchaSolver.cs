@@ -8,8 +8,6 @@ namespace IndiegalaFreebieNotifier.Module {
 	internal class CaptchaSolver: IDisposable {
 		private readonly ILogger<Parser> _logger;
 
-		private readonly TwoCaptcha.TwoCaptcha solver;
-
 		private readonly string recaptchaSiteKey = "6Le8buspAAAAAL_KiyJlKizmrag_ZHR7SPi8nvX6";
 		private readonly string indiegalaBaseUrl = "https://www.indiegala.com";
 
@@ -18,14 +16,15 @@ namespace IndiegalaFreebieNotifier.Module {
 		private readonly string debugSolvingCaptcha = "Solving captcha";
 		#endregion
 
-		public CaptchaSolver(ILogger<Parser> logger, string apiKey) {
+		public CaptchaSolver(ILogger<Parser> logger) {
 			_logger = logger;
-			solver = new(apiKey);
 		}
 
-		public async Task<string> SolveReCaptchaAsync() {
+		public async Task<string> SolveReCaptchaAsync(string apiKey) {
 			try {
 				_logger.LogDebug(debugSolvingCaptcha);
+
+				var solver = new TwoCaptcha.TwoCaptcha(apiKey);
 
 				var captcha = new ReCaptcha();
 
