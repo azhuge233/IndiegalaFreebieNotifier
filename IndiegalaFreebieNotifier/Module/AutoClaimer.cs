@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace IndiegalaFreebieNotifier.Module {
 	internal class AutoClaimer : IDisposable {
-		private readonly ILogger<Parser> _logger;
+		private readonly ILogger<AutoClaimer> _logger;
 
 		private readonly string claimUrlPattern = "https://www.indiegala.com/developers/ajax/add-to-library/{0}/{1}/freebies";
 
 		private HttpClient Client { get; set; } = new();
 
-		public AutoClaimer(ILogger<Parser> logger) {
+		public AutoClaimer(ILogger<AutoClaimer> logger) {
 			_logger = logger;
 		}
 
