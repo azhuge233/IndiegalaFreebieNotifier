@@ -1,4 +1,5 @@
 ﻿using IndiegalaFreebieNotifier.Model;
+using IndiegalaFreebieNotifier.Model.String;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -145,9 +146,18 @@ namespace IndiegalaFreebieNotifier.Module {
 
 				using var client = new HttpClient();
 
-				client.DefaultRequestHeaders.Add("Cookie", cookie);
+				var request = new HttpRequestMessage() {
+					Method = HttpMethod.Post,
+					RequestUri = new Uri(CookieTestUrl),
+					Headers = {
+						{ AutoClaimerStrings.CookieKey, cookie },
+						{ AutoClaimerStrings.UserAgentKey, AutoClaimerStrings.UserAgentValue }
+					}
+				};
 
-				var resp = await client.GetAsync(CookieTestUrl);
+				_logger.LogInformation("OK");
+
+				var resp = await client.SendAsync(request);
 
 				if (resp.IsSuccessStatusCode) {
 					var jsonString = await resp.Content.ReadAsStringAsync();
@@ -155,7 +165,7 @@ namespace IndiegalaFreebieNotifier.Module {
 					var jsonData = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonString);
 
 					if (jsonData == null || !jsonData.TryGetValue("status", out _) || jsonData["status"] == "login") {
-						_logger.LogError("Cookie is invalid or expired");
+						_logger.LogWarning("Cookie is invalid or expired");
 						return false;
 					} else {
 						_logger.LogDebug("Cookie is valid");
