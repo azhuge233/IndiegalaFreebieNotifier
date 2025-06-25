@@ -10,6 +10,9 @@ namespace IndiegalaFreebieNotifier.Module {
 
 		private readonly TwoCaptcha.TwoCaptcha solver;
 
+		private readonly string recaptchaSiteKey = "6Le8buspAAAAAL_KiyJlKizmrag_ZHR7SPi8nvX6";
+		private readonly string indiegalaBaseUrl = "https://www.indiegala.com";
+
 		#region debug strings
 		private readonly string debugCaptchaSolved = "Captcha solved: {0}";
 		private readonly string debugSolvingCaptcha = "Solving captcha";
@@ -20,14 +23,14 @@ namespace IndiegalaFreebieNotifier.Module {
 			solver = new(apiKey);
 		}
 
-		public async Task<string> SolveReCaptchaAsync(string siteKey, string pageUrl) {
+		public async Task<string> SolveReCaptchaAsync() {
 			try {
 				_logger.LogDebug(debugSolvingCaptcha);
 
 				var captcha = new ReCaptcha();
 
-				captcha.SetSiteKey(siteKey);
-				captcha.SetUrl(pageUrl);
+				captcha.SetSiteKey(recaptchaSiteKey);
+				captcha.SetUrl(indiegalaBaseUrl);
 
 				await solver.Solve(captcha);
 
