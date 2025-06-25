@@ -18,7 +18,7 @@ namespace IndiegalaFreebieNotifier.Model.String {
 		internal static readonly string debugClaimed = "Claimed: {0}";
 
 		internal static readonly string warningHttpFailed = "Http response failed. status code: {1}";
-		internal static readonly string warningClaimFailed = "Claim failed. Game name: {0} | status: {1} | code: {1}";
+		internal static readonly string warningClaimFailed = "Claim failed. Game name: {0} | status: {1} | code: {2}";
 		#endregion
 	}
 }
