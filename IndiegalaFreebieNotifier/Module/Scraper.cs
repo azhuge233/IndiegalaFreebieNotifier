@@ -12,7 +12,6 @@ namespace IndiegalaFreebieNotifier.Module {
 
 		public Scraper(ILogger<Scraper> logger) {
 			_logger = logger;
-			
 		}
 
 		public async Task<string> GetHomeSource() {
