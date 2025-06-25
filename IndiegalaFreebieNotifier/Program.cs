@@ -17,7 +17,24 @@ namespace IndiegalaFreebieNotifier {
 					// Get telegram bot token, chatID and previous records
 					var jsonOp = services.GetRequiredService<JsonOP>();
 					var config = jsonOp.LoadConfig();
-					services.GetRequiredService<ConfigValidator>().CheckValid(config);
+
+					// check config validity
+					var configValidator = services.GetRequiredService<ConfigValidator>();
+					configValidator.CheckValid(config);
+					
+					if (config.EnableCookieAutoRefresh) {
+						// check cookie validity
+						bool isCookieValid = await configValidator.CheckCookie(config.Cookie);
+
+						// refresh cookie if not valid
+						if (!isCookieValid) {
+							string newCookie = await services.GetRequiredService<CookieRefresher>().GetCookie(config);
+							config.Cookie = newCookie;
+
+							// save new cookie
+							jsonOp.SaveConfig(config);
+						}
+					}
 
 					// Get page source
 					var source = await services.GetRequiredService<Scraper>().GetHomeSource();
