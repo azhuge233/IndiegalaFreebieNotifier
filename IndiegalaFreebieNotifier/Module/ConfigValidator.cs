@@ -116,7 +116,7 @@ namespace IndiegalaFreebieNotifier.Module {
 
 				//AutoClaim
 				if (config.EnableAutoClaim) { 
-					if(string.IsNullOrEmpty(config.Cookies))
+					if(!config.EnableCookieAutoRefresh && string.IsNullOrEmpty(config.Cookie))
 						throw new Exception(message: "No cookies provided for auto claim!");
 				}
 

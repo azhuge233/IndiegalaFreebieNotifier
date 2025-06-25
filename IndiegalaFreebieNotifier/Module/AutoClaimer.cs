@@ -26,7 +26,7 @@ namespace IndiegalaFreebieNotifier.Module {
 				return;
 			}
 
-			if (string.IsNullOrEmpty(config.Cookies)) {
+			if (string.IsNullOrEmpty(config.Cookie)) {
 				_logger.LogWarning(AutoClaimerStrings.debugNoCookie);
 				return;
 			}
@@ -43,7 +43,7 @@ namespace IndiegalaFreebieNotifier.Module {
 						Method = HttpMethod.Post,
 						RequestUri = new Uri(string.Format(claimUrlPattern, record.ID, urlName)),
 						Headers = {
-							{ AutoClaimerStrings.CookieKey, config.Cookies },
+							{ AutoClaimerStrings.CookieKey, config.Cookie },
 							{ AutoClaimerStrings.UserAgentKey, AutoClaimerStrings.UserAgentValue }
 						}
 					};
