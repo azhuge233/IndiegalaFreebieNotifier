@@ -4,6 +4,7 @@ A CLI tool that
 - Fetchs freebies info from [https://freebies.indiegala.com/](https://freebies.indiegala.com/).
 - Sends notifications through Telegram, Bark, Email, QQ, PushPlus, DingTalk, Discord and MeoW.
 - Auto claim new freebies use given cookie.
+- Auto refresh cookie with [playwright](https://playwright.dev/) and [2Captcha](https://2captcha.com/).
 
 Demo Telegram Channel [@azhuge233_FreeGames](https://t.me/azhuge233_FreeGames)
 
