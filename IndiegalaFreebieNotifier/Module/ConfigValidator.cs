@@ -155,8 +155,6 @@ namespace IndiegalaFreebieNotifier.Module {
 					}
 				};
 
-				_logger.LogInformation("OK");
-
 				var resp = await client.SendAsync(request);
 
 				if (resp.IsSuccessStatusCode) {
