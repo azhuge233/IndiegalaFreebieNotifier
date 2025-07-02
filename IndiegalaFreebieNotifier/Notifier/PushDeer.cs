@@ -1,25 +1,23 @@
-﻿using System;
-using System.Web;
+﻿using HtmlAgilityPack;
+using IndiegalaFreebieNotifier.Model;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using HtmlAgilityPack;
-using IndiegalaFreebieNotifier.Model;
+using System.Web;
 
 namespace IndiegalaFreebieNotifier.Notifier {
-	internal class PushDeer: INotifiable {
-		private readonly ILogger<PushDeer> _logger;
+	internal class PushDeer(ILogger<PushDeer> logger, IOptions<Config> config) : INotifiable {
+		private readonly ILogger<PushDeer> _logger = logger;
+		private readonly Config config = config.Value;
 
 		#region debug strings
 		private readonly string debugSendMessage = "Send notification to PushDeer";
 		#endregion
 
-		public PushDeer(ILogger<PushDeer> logger) {
-			_logger = logger;
-		}
-
-		public async Task SendMessage(NotifyConfig config, List<FreeGameRecord> records) {
+		public async Task SendMessage(List<FreeGameRecord> records) {
 			try {
 				_logger.LogDebug(debugSendMessage);
 				var webGet = new HtmlWeb();

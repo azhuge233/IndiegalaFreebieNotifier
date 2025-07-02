@@ -1,7 +1,8 @@
 ﻿using IndiegalaFreebieNotifier.Model;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using IndiegalaFreebieNotifier.Models.PostContent;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -9,18 +10,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace IndiegalaFreebieNotifier.Notifier {
-	internal class Meow: INotifiable {
-		private readonly ILogger<Meow> _logger;
+	internal class Meow(ILogger<Meow> logger, IOptions<Config> config) : INotifiable {
+		private readonly ILogger<Meow> _logger = logger;
+		private readonly Config config = config.Value;
 
 		#region debug strings
 		private readonly string debugSendMessage = "Send notification to Meow";
 		#endregion
 
-		public Meow(ILogger<Meow> logger) {
-			_logger = logger;
-		}
-
-		public async Task SendMessage(NotifyConfig config, List<FreeGameRecord> records) {
+		public async Task SendMessage(List<FreeGameRecord> records) {
 			try {
 				_logger.LogDebug(debugSendMessage);
 

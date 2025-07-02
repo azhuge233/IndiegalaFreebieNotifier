@@ -1,23 +1,42 @@
-﻿using System;
+﻿using IndiegalaFreebieNotifier.Model;
+using MailKit.Net.Smtp;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using MimeKit;
+using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using MailKit.Net.Smtp;
-using MimeKit;
-using IndiegalaFreebieNotifier.Model;
 
 namespace IndiegalaFreebieNotifier.Notifier {
-	class Email : INotifiable {
-		private readonly ILogger<Email> _logger;
+	class Email(ILogger<Email> logger, IOptions<Config> config) : INotifiable {
+		private readonly ILogger<Email> _logger = logger;
+		private readonly Config config = config.Value;
 
 		#region debug strings
 		private readonly string debugSendMessage = "Send notification to Email";
 		private readonly string debugCreateMessage = "Create notification message";
 		#endregion
 
-		public Email(ILogger<Email> logger) {
-			_logger = logger;
+		public async Task SendMessage(List<FreeGameRecord> records) {
+			try {
+				_logger.LogDebug(debugSendMessage);
+
+				var message = CreateMessage(records, config.FromEmailAddress, config.ToEmailAddress);
+
+				using var client = new SmtpClient();
+				client.Connect(config.SMTPServer, config.SMTPPort, true);
+				client.Authenticate(config.AuthAccount, config.AuthPassword);
+				await client.SendAsync(message);
+				client.Disconnect(true);
+
+				_logger.LogDebug($"Done: {debugSendMessage}");
+			} catch (Exception) {
+				_logger.LogError($"Error: {debugSendMessage}");
+				throw;
+			} finally {
+				Dispose();
+			}
 		}
 
 		private MimeMessage CreateMessage(List<FreeGameRecord> pushList, string fromAddress, string toAddress) {
@@ -37,7 +56,7 @@ namespace IndiegalaFreebieNotifier.Notifier {
 				pushList.ForEach(record => sb.AppendFormat(NotifyFormatStrings.emailBodyFormat, record.ToEmailMessage()));
 
 				message.Body = new TextPart("html") {
-					Text =sb.Append(NotifyFormatStrings.projectLinkHTML).ToString()
+					Text = sb.Append(NotifyFormatStrings.projectLinkHTML).ToString()
 				};
 
 				_logger.LogDebug($"Done: {debugCreateMessage}");
@@ -45,27 +64,6 @@ namespace IndiegalaFreebieNotifier.Notifier {
 			} catch (Exception) {
 				_logger.LogError($"Error: {debugCreateMessage}");
 				throw;
-			}
-		}
-
-		public async Task SendMessage(NotifyConfig config, List<FreeGameRecord> records) {
-			try {
-				_logger.LogDebug(debugSendMessage);
-
-				var message = CreateMessage(records, config.FromEmailAddress, config.ToEmailAddress);
-
-				using var client = new SmtpClient();
-				client.Connect(config.SMTPServer, config.SMTPPort, true);
-				client.Authenticate(config.AuthAccount, config.AuthPassword);
-				await client.SendAsync(message);
-				client.Disconnect(true);
-
-				_logger.LogDebug($"Done: {debugSendMessage}");
-			} catch (Exception) {
-				_logger.LogError($"Error: {debugSendMessage}");
-				throw;
-			} finally {
-				Dispose();
 			}
 		}
 

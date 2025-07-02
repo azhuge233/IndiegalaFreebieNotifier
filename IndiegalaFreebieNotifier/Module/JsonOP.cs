@@ -6,14 +6,10 @@ using Microsoft.Extensions.Logging;
 using IndiegalaFreebieNotifier.Model;
 
 namespace IndiegalaFreebieNotifier.Module {
-	class JsonOP : IDisposable {
-		private readonly ILogger<JsonOP> _logger;
+	class JsonOP(ILogger<JsonOP> logger) : IDisposable {
+		private readonly ILogger<JsonOP> _logger = logger;
 		private readonly string configPath = $"{AppDomain.CurrentDomain.BaseDirectory}Config{Path.DirectorySeparatorChar}config.json";
 		private readonly string recordPath = $"{AppDomain.CurrentDomain.BaseDirectory}Record{Path.DirectorySeparatorChar}record.json";
-
-		public JsonOP(ILogger<JsonOP> logger) {
-			_logger = logger;
-		}
 
 		public void WriteData(List<FreeGameRecord> data) {
 			try {
@@ -40,18 +36,6 @@ namespace IndiegalaFreebieNotifier.Module {
 				return content;
 			} catch (Exception) {
 				_logger.LogError("Loading previous records failed.");
-				throw;
-			}
-		}
-
-		public Config LoadConfig() {
-			try {
-				_logger.LogDebug("Loading config");
-				var content = JsonConvert.DeserializeObject<Config>(File.ReadAllText(configPath));
-				_logger.LogDebug("Done");
-				return content;
-			} catch (Exception) {
-				_logger.LogError("Loading config failed.");
 				throw;
 			}
 		}

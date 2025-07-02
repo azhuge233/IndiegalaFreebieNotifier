@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using TwoCaptcha.Captcha;
 
 namespace IndiegalaFreebieNotifier.Module {
-	internal class CaptchaSolver: IDisposable {
-		private readonly ILogger<Parser> _logger;
+	internal class CaptchaSolver(ILogger<Parser> logger) : IDisposable {
+		private readonly ILogger<Parser> _logger = logger;
 
 		private readonly string recaptchaSiteKey = "6Le8buspAAAAAL_KiyJlKizmrag_ZHR7SPi8nvX6";
 		private readonly string indiegalaBaseUrl = "https://www.indiegala.com";
@@ -15,10 +15,6 @@ namespace IndiegalaFreebieNotifier.Module {
 		private readonly string debugCaptchaSolved = "Captcha solved: {0}";
 		private readonly string debugSolvingCaptcha = "Solving captcha";
 		#endregion
-
-		public CaptchaSolver(ILogger<Parser> logger) {
-			_logger = logger;
-		}
 
 		public async Task<string> SolveReCaptchaAsync(string apiKey) {
 			try {

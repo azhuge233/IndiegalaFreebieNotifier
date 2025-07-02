@@ -1,26 +1,24 @@
-﻿using System;
+﻿using IndiegalaFreebieNotifier.Model;
+using IndiegalaFreebieNotifier.Model.PostContent;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using IndiegalaFreebieNotifier.Model;
-using System.Net.Http;
-using IndiegalaFreebieNotifier.Model.PostContent;
-using Newtonsoft.Json;
 
 namespace IndiegalaFreebieNotifier.Notifier {
-	class QQHttp: INotifiable {
-		private readonly ILogger<QQHttp> _logger;
+	class QQHttp(ILogger<QQHttp> logger, IOptions<Config> config) : INotifiable {
+		private readonly ILogger<QQHttp> _logger = logger;
+		private readonly Config config = config.Value;
 
 		#region debug strings
 		private readonly string debugSendMessage = "Send notifications to QQ Http";
 		#endregion
 
-		public QQHttp(ILogger<QQHttp> logger) {
-			_logger = logger;
-		}
-
-		public async Task SendMessage(NotifyConfig config, List<FreeGameRecord> records) {
+		public async Task SendMessage(List<FreeGameRecord> records) {
 			try {
 				_logger.LogDebug(debugSendMessage);
 

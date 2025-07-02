@@ -1,6 +1,7 @@
 ﻿using IndiegalaFreebieNotifier.Model;
 using IndiegalaFreebieNotifier.Model.String;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,18 +10,15 @@ using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace IndiegalaFreebieNotifier.Module {
-	internal class AutoClaimer : IDisposable {
-		private readonly ILogger<AutoClaimer> _logger;
+	internal class AutoClaimer(ILogger<AutoClaimer> logger, IOptions<Config> config) : IDisposable {
+		private readonly ILogger<AutoClaimer> _logger = logger;
+		private readonly Config config = config.Value;
 
 		private readonly string claimUrlPattern = "https://www.indiegala.com/developers/ajax/add-to-library/{0}/{1}/freebies";
 
 		private HttpClient Client { get; set; } = new();
 
-		public AutoClaimer(ILogger<AutoClaimer> logger) {
-			_logger = logger;
-		}
-
-		public async Task Claim(Config config, List<FreeGameRecord> records) {
+		public async Task Claim(List<FreeGameRecord> records) {
 			if (!config.EnableAutoClaim) {
 				_logger.LogInformation(AutoClaimerStrings.debugAutoClaimDisabled);
 				return;

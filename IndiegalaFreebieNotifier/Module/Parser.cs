@@ -7,12 +7,8 @@ using IndiegalaFreebieNotifier.Model;
 using System.Text.RegularExpressions;
 
 namespace IndiegalaFreebieNotifier.Module {
-	class Parser : IDisposable {
-		private readonly ILogger<Parser> _logger;
-
-		public Parser(ILogger<Parser> logger) {
-			_logger = logger;
-		}
+	class Parser(ILogger<Parser> logger) : IDisposable {
+		private readonly ILogger<Parser> _logger = logger;
 
 		public ParseResult Parse(string source, List<FreeGameRecord> records) {
 			try {

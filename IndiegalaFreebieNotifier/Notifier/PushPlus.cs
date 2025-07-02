@@ -1,44 +1,24 @@
-﻿using System;
+﻿using HtmlAgilityPack;
+using IndiegalaFreebieNotifier.Model;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Web;
 using System.Threading.Tasks;
-using HtmlAgilityPack;
-using Microsoft.Extensions.Logging;
-using IndiegalaFreebieNotifier.Model;
+using System.Web;
 
 namespace IndiegalaFreebieNotifier.Notifier {
-	class PushPlus: INotifiable {
-		private readonly ILogger<PushPlus> _logger;
+	class PushPlus(ILogger<PushPlus> logger, IOptions<Config> config) : INotifiable {
+		private readonly ILogger<PushPlus> _logger = logger;
+		private readonly Config config = config.Value;
 
 		#region debug strings
 		private readonly string debugSendMessage = "Send notification to PushPlus";
 		private readonly string debugCreateMessage = "Create notification message";
 		#endregion
 
-		public PushPlus(ILogger<PushPlus> logger) {
-			_logger = logger;
-		}
-
-		private string CreateMessage(List<FreeGameRecord> records) {
-			try {
-				_logger.LogDebug(debugCreateMessage);
-
-				var sb = new StringBuilder();
-
-				records.ForEach(record => sb.AppendFormat(NotifyFormatStrings.pushPlusBodyFormat, record.ToPushPlusMessage()));
-
-				sb.Append(NotifyFormatStrings.projectLinkHTML);
-
-				_logger.LogDebug($"Done: {debugCreateMessage}");
-				return HttpUtility.UrlEncode(sb.ToString());
-			} catch (Exception) {
-				_logger.LogError($"Error: {debugCreateMessage}");
-				throw;
-			}
-		}
-
-		public async Task SendMessage(NotifyConfig config, List<FreeGameRecord> records) {
+		public async Task SendMessage(List<FreeGameRecord> records) {
 			try {
 				_logger.LogDebug(debugSendMessage);
 
@@ -60,6 +40,24 @@ namespace IndiegalaFreebieNotifier.Notifier {
 				throw;
 			} finally {
 				Dispose();
+			}
+		}
+
+		private string CreateMessage(List<FreeGameRecord> records) {
+			try {
+				_logger.LogDebug(debugCreateMessage);
+
+				var sb = new StringBuilder();
+
+				records.ForEach(record => sb.AppendFormat(NotifyFormatStrings.pushPlusBodyFormat, record.ToPushPlusMessage()));
+
+				sb.Append(NotifyFormatStrings.projectLinkHTML);
+
+				_logger.LogDebug($"Done: {debugCreateMessage}");
+				return HttpUtility.UrlEncode(sb.ToString());
+			} catch (Exception) {
+				_logger.LogError($"Error: {debugCreateMessage}");
+				throw;
 			}
 		}
 

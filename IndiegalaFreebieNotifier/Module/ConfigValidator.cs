@@ -1,6 +1,7 @@
 ﻿using IndiegalaFreebieNotifier.Model;
 using IndiegalaFreebieNotifier.Model.String;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -8,8 +9,9 @@ using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace IndiegalaFreebieNotifier.Module {
-	class ConfigValidator : IDisposable {
-		private readonly ILogger<ConfigValidator> _logger;
+	class ConfigValidator(ILogger<ConfigValidator> logger, IOptions<Config> config) : IDisposable {
+		private readonly ILogger<ConfigValidator> _logger = logger;
+		private readonly Config config = config.Value;
 
 		private readonly string CookieTestUrl = "https://www.indiegala.com/developers/ajax/add-to-library/6ba4b90d-ec12-4343-bd6f-415f0881ebae/die-young-prologue/freebies";
 
@@ -19,11 +21,7 @@ namespace IndiegalaFreebieNotifier.Module {
 		private readonly string debugCheckValid = "Check config file validation";
 		#endregion
 
-		public ConfigValidator(ILogger<ConfigValidator> logger) {
-			_logger = logger;
-		}
-
-		public void CheckValid(Config config) {
+		public void CheckValid() {
 			try {
 				_logger.LogDebug(debugCheckValid);
 
@@ -140,7 +138,7 @@ namespace IndiegalaFreebieNotifier.Module {
 			}
 		}
 
-		public async Task<bool> CheckCookie(string cookie) {
+		public async Task<bool> CheckCookie() {
 			try {
 				_logger.LogDebug("Check cookie validity");
 
@@ -150,7 +148,7 @@ namespace IndiegalaFreebieNotifier.Module {
 					Method = HttpMethod.Post,
 					RequestUri = new Uri(CookieTestUrl),
 					Headers = {
-						{ AutoClaimerStrings.CookieKey, cookie },
+						{ AutoClaimerStrings.CookieKey, config.Cookie },
 						{ AutoClaimerStrings.UserAgentKey, AutoClaimerStrings.UserAgentValue }
 					}
 				};

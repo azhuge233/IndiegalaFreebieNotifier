@@ -4,15 +4,11 @@ using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace IndiegalaFreebieNotifier.Module {
-	class Scraper : IDisposable {
-		private readonly ILogger<Scraper> _logger;
+	class Scraper(ILogger<Scraper> logger) : IDisposable {
+		private readonly ILogger<Scraper> _logger = logger;
 		private readonly string homeUrl = "https://freebies.indiegala.com/";
 
 		private HttpClient Client { get; set; } = new();
-
-		public Scraper(ILogger<Scraper> logger) {
-			_logger = logger;
-		}
 
 		public async Task<string> GetHomeSource() {
 			try {

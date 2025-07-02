@@ -1,25 +1,23 @@
-﻿using System;
-using System.Text;
-using System.Web;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using HtmlAgilityPack;
-using Microsoft.Extensions.Logging;
+﻿using HtmlAgilityPack;
 using IndiegalaFreebieNotifier.Model;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
 
 namespace IndiegalaFreebieNotifier.Notifier {
-	class Barker : INotifiable {
-		private readonly ILogger<Barker> _logger;
+	class Barker(ILogger<Barker> logger, IOptions<Config> config) : INotifiable {
+		private readonly ILogger<Barker> _logger = logger;
+		private readonly Config config = config.Value;
 
 		#region debug strings
 		private readonly string debugSendMessage = "Send notification to Bark";
 		#endregion
 
-		public Barker(ILogger<Barker> logger) {
-			_logger = logger;
-		}
-
-		public async Task SendMessage(NotifyConfig config, List<FreeGameRecord> records) {
+		public async Task SendMessage(List<FreeGameRecord> records) {
 			try {
 				var sb = new StringBuilder();
 				string url = new StringBuilder().AppendFormat(NotifyFormatStrings.barkUrlFormat, config.BarkAddress, config.BarkToken).ToString();

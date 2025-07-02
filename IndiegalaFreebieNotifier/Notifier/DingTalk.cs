@@ -1,26 +1,24 @@
-﻿using System;
+﻿using IndiegalaFreebieNotifier.Model;
+using IndiegalaFreebieNotifier.Model.PostContent;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Microsoft.Extensions.Logging;
-using IndiegalaFreebieNotifier.Model;
-using IndiegalaFreebieNotifier.Model.PostContent;
 
 namespace IndiegalaFreebieNotifier.Notifier {
-	class DingTalk: INotifiable {
-		private readonly ILogger<DingTalk> _logger;
+	class DingTalk(ILogger<DingTalk> logger, IOptions<Config> config) : INotifiable {
+		private readonly ILogger<DingTalk> _logger = logger;
+		private readonly Config config = config.Value;
 
 		#region debug strings
 		private readonly string debugSendMessage = "Send notifications to DingTalk";
 		#endregion
 
-		public DingTalk(ILogger<DingTalk> logger) {
-			_logger = logger;
-		}
-
-		public async Task SendMessage(NotifyConfig config, List<FreeGameRecord> records) {
+		public async Task SendMessage(List<FreeGameRecord> records) {
 			try {
 				_logger.LogDebug(debugSendMessage);
 

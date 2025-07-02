@@ -1,17 +1,19 @@
-﻿using IndiegalaFreebieNotifier.Model.WebSocketContent;
-using IndiegalaFreebieNotifier.Model;
+﻿using IndiegalaFreebieNotifier.Model;
+using IndiegalaFreebieNotifier.Model.WebSocketContent;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
 using Websocket.Client;
-using Newtonsoft.Json;
 
 namespace IndiegalaFreebieNotifier.Notifier {
-	internal class QQWebSocket : INotifiable {
-		private readonly ILogger<QQWebSocket> _logger;
+	internal class QQWebSocket(ILogger<QQWebSocket> logger, IOptions<Config> config) : INotifiable {
+		private readonly ILogger<QQWebSocket> _logger = logger;
+		private readonly Config config = config.Value;
 
 		#region debug strings
 		private readonly string debugSendMessage = "Send notifications to QQ WebSocket";
@@ -20,34 +22,7 @@ namespace IndiegalaFreebieNotifier.Notifier {
 		private readonly string debugWSDisconnected = "Disconnected: {0}";
 		#endregion
 
-		public QQWebSocket(ILogger<QQWebSocket> logger) {
-			_logger = logger;
-		}
-
-		private WebsocketClient GetWSClient(NotifyConfig config) {
-			var url = new Uri(string.Format(NotifyFormatStrings.qqWebSocketUrlFormat, config.QQWebSocketAddress, config.QQWebSocketPort, config.QQWebSocketToken));
-
-			#region new websocket client
-			var client = new WebsocketClient(url);
-			client.ReconnectionHappened.Subscribe(info => _logger.LogDebug(debugWSReconnection, info.Type));
-			client.MessageReceived.Subscribe(msg => _logger.LogDebug(debugWSMessageRecieved, msg));
-			client.DisconnectionHappened.Subscribe(msg => _logger.LogDebug(debugWSDisconnected, msg));
-			#endregion
-
-			return client;
-		}
-
-		private static List<WSPacket> GetSendPacket(NotifyConfig config, List<FreeGameRecord> records) {
-			return records.Select(record => new WSPacket {
-				Action = NotifyFormatStrings.qqWebSocketSendAction,
-				Params = new Param {
-					UserID = config.ToQQID,
-					Message = $"{string.Format(NotifyFormatStrings.qqMessageFormat, record.ToQQMessage())}{NotifyFormatStrings.projectLink}"
-				}
-			}).ToList();
-		}
-
-		public async Task SendMessage(NotifyConfig config, List<FreeGameRecord> records) {
+		public async Task SendMessage(List<FreeGameRecord> records) {
 			try {
 				_logger.LogDebug(debugSendMessage);
 
@@ -71,6 +46,29 @@ namespace IndiegalaFreebieNotifier.Notifier {
 			} finally {
 				Dispose();
 			}
+		}
+
+		private WebsocketClient GetWSClient(NotifyConfig config) {
+			var url = new Uri(string.Format(NotifyFormatStrings.qqWebSocketUrlFormat, config.QQWebSocketAddress, config.QQWebSocketPort, config.QQWebSocketToken));
+
+			#region new websocket client
+			var client = new WebsocketClient(url);
+			client.ReconnectionHappened.Subscribe(info => _logger.LogDebug(debugWSReconnection, info.Type));
+			client.MessageReceived.Subscribe(msg => _logger.LogDebug(debugWSMessageRecieved, msg));
+			client.DisconnectionHappened.Subscribe(msg => _logger.LogDebug(debugWSDisconnected, msg));
+			#endregion
+
+			return client;
+		}
+
+		private static List<WSPacket> GetSendPacket(NotifyConfig config, List<FreeGameRecord> records) {
+			return records.Select(record => new WSPacket {
+				Action = NotifyFormatStrings.qqWebSocketSendAction,
+				Params = new Param {
+					UserID = config.ToQQID,
+					Message = $"{string.Format(NotifyFormatStrings.qqMessageFormat, record.ToQQMessage())}{NotifyFormatStrings.projectLink}"
+				}
+			}).ToList();
 		}
 
 		public void Dispose() {
