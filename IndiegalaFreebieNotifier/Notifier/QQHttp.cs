@@ -2,11 +2,11 @@
 using IndiegalaFreebieNotifier.Model.PostContent;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace IndiegalaFreebieNotifier.Notifier {
@@ -38,7 +38,7 @@ namespace IndiegalaFreebieNotifier.Notifier {
 
 					content.Message = $"{string.Format(NotifyFormatStrings.qqMessageFormat, record.ToQQMessage())}{NotifyFormatStrings.projectLink}";
 
-					data = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
+					data = new StringContent(JsonSerializer.Serialize(content), Encoding.UTF8, "application/json");
 					resp = await client.PostAsync(url, data);
 
 					_logger.LogDebug(await resp.Content.ReadAsStringAsync());

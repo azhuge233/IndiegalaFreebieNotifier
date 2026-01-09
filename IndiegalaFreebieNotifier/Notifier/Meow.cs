@@ -2,11 +2,11 @@
 using IndiegalaFreebieNotifier.Models.PostContent;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace IndiegalaFreebieNotifier.Notifier {
@@ -33,7 +33,7 @@ namespace IndiegalaFreebieNotifier.Notifier {
 					content.Message = record.ToMeowMessage();
 					content.Url = record.Url;
 
-					var data = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
+					var data = new StringContent(JsonSerializer.Serialize(content), Encoding.UTF8, "application/json");
 					var resp = await client.PostAsync(url, data);
 
 					_logger.LogDebug(await resp.Content.ReadAsStringAsync());
