@@ -9,7 +9,7 @@
 		<PublishTrimmed>false</PublishTrimmed>
 		<SelfContained>true</SelfContained>
 		<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
-		<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+		<IncludeNativeLibrariesForSelfExtract>false</IncludeNativeLibrariesForSelfExtract>
 		<DebugSymbols>false</DebugSymbols>
 		<DebugType>none</DebugType>
   </PropertyGroup>
