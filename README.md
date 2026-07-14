@@ -6,7 +6,7 @@ A CLI tool that
 - Auto claim new freebies use given cookie.
 - Auto refresh cookie with [playwright](https://playwright.dev/) and [2Captcha](https://2captcha.com/).
 
-Demo Telegram Channel [@azhuge233_FreeGames](https://t.me/azhuge233_FreeGames)
+Demo Telegram Channel [@azhuge233_FreeGames](https://telegram.me/azhuge233_FreeGames)
 
 ## Build
 
